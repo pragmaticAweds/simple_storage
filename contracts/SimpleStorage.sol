@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: MIT
 
-pragma solidity 0.8.24; //stating our solidity version, in range >=0.8.18 <0.9.0
+pragma solidity ^0.8.16; //stating our solidity version, in range >=0.8.18 <0.9.0
 
 contract SimpleStorage {
 
