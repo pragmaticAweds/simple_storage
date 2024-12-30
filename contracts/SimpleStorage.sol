@@ -25,7 +25,6 @@ contract SimpleStorage {
     // you specify the key => value
     //default value for nonexisting key is 0
 
-        //john -> 10
     mapping(string => uint256) public nameToFavoriteNumber;
     
     function store(uint256 _favoriteNumber) public {
