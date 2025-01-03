@@ -23,5 +23,13 @@ contract TodoList {
         return todoLists;
     }
 
+    function markTodo(uint16 index)  public {
+        Todo memory todo = todoLists[index];
+        
+        todo.isCompleted = !todo.isCompleted;
+
+        todoLists[index] = todo;
+    }
+
     
 }
