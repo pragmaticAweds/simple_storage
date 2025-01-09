@@ -9,7 +9,7 @@ contract fundMe {
     function fund () public payable  {
 
     /*
-        Objectives:
+        Objectives At the end:
 
         - Allow users to send money
         - Have a minimum usd amount to send
