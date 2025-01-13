@@ -14,6 +14,20 @@
 			},
 			{
 				"inputs": [],
+				"name": "getConversionRate",
+				"outputs": [],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"inputs": [],
+				"name": "getPrice",
+				"outputs": [],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"inputs": [],
 				"name": "minimumUsd",
 				"outputs": [
 					{
@@ -54,11 +68,11 @@
 	},
 	"sources": {
 		"contracts/fundMe.sol": {
-			"keccak256": "0xaa1c469bcd0acf5e23087eefe0f83a13eaf326004b623e55ddd09214374bbef9",
+			"keccak256": "0x64b383f1fdfa893d11aa316f61e0650ef764d937121c956c0bf041f5191929b7",
 			"license": "MIT",
 			"urls": [
-				"bzz-raw://e4a87ef739f2e01abdcab85660871d18ac16923344aa43ea5ef75364464d0a75",
-				"dweb:/ipfs/QmZbDSF3oxmQuyomcmLGgjsPYFTAzD1TukomERj1Py5WxZ"
+				"bzz-raw://756af1c30fa093c63b6d6092ab1e55f2a4625c19a483a31f4d056a54878ba64a",
+				"dweb:/ipfs/QmUW5WBPeLpDZTrrssyKMK8QpJhfZHUoBUeQSe3wgW4K1v"
 			]
 		}
 	},
