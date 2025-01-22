@@ -1,8 +1,7 @@
-
 // SPDX-License-Identifier: MIT
+
 pragma solidity ^0.8.18;
 
-import { AggregatorV3Interface } from "@chainlink/contracts/src/v0.8/shared/interfaces/AggregatorV3Interface.sol";
 
 
     /*
@@ -20,50 +19,47 @@ import { AggregatorV3Interface } from "@chainlink/contracts/src/v0.8/shared/inte
 
     */
 
+ 
+    // 1e18 = 1 ETH = 1000000000000000000 = 1 * 10 ** 18
+    // Gas cost is mostly in gwei
+
+
+    import { PriceConverter } from "./priceConverter.sol";
 
 contract fundMe {
+
+    using PriceConverter for uint256;
+
         uint256 public minimumUsd = 5e18;
+
+        address[] public funders;
+
+        mapping(address funder => uint256 amountFunded) public addressToAmountFunded;
+        
 
     function fund () public payable  {
 
-        require(getConversionRate(msg.value) >= minimumUsd, "Did not send enough ETH"); 
-        // 1e18 = 1 ETH = 1000000000000000000 = 1 * 10 ** 18
-        // Gas cost is mostly in gwei
+        require(msg.value.getConversionRate() >= minimumUsd, "Did not send enough ETH");
+
+        funders.push(msg.sender);
+
+        addressToAmountFunded[msg.sender] += msg.value;
     }
+   
+    function withdraw () public {
+        for (uint256 funderIndex = 0; funderIndex < funders.length; funderIndex++) {
 
+            address funder = funders[funderIndex];
 
-    function getPrice() view public returns(uint256) {
-
-    // 0x694AA1769357215DE4FAC081bf1f309aDC325306 ETH/USD Sepolia Address
-    // AB
-    
-    AggregatorV3Interface priceFeed =  AggregatorV3Interface(0x694AA1769357215DE4FAC081bf1f309aDC325306);
-
-        // prettier-ignore
-        (
-            /* uint80 roundID */,
-            int256 answer, //price of eth in terms of usd - 2000.00000000
-            /*uint startedAt*/,
-            /*uint timeStamp*/,
-            /*uint80 answeredInRound*/
-        ) = priceFeed.latestRoundData();
-
-        return uint256(answer * 1e10);
+            addressToAmountFunded[funder] = 0;
 
         }
 
+        funders = new address[](0);
 
-     function getConversionRate(uint256 ethAmount) public view returns (uint256) {
+        // withdrawing the fund
         
-            uint256 ethPrice = getPrice();
-
-            uint256 ethAmountInUsd = (ethPrice * ethAmount) / 1e18; // 1000000000000000000,000000000000000000 / 1e18
-
-            return ethAmountInUsd;
-        }
-
-        
-
-    // function withdraw () public {}
+        // 3 different ways of sending native blockchain are: transfer, send, call
+    }
     
 }
