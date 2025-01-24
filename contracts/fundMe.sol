@@ -35,7 +35,13 @@ contract fundMe {
         address[] public funders;
 
         mapping(address funder => uint256 amountFunded) public addressToAmountFunded;
-        
+
+        address public owner;
+
+    constructor() {
+        owner = msg.sender;
+    }
+
 
     function fund () public payable  {
 
@@ -46,7 +52,8 @@ contract fundMe {
         addressToAmountFunded[msg.sender] += msg.value;
     }
    
-    function withdraw () public {
+    function withdraw () public onlyOwner {
+
         for (uint256 funderIndex = 0; funderIndex < funders.length; funderIndex++) {
 
             address funder = funders[funderIndex];
@@ -60,6 +67,26 @@ contract fundMe {
         // withdrawing the fund
         
         // 3 different ways of sending native blockchain are: transfer, send, call
+
+        //transfer -- gas fee is capped at 2300, anything exceeding will throw error and revver
+    //     payable(msg.sender).transfer(address(this).balance);
+
+    //     //send - operates like transfer but, returns bool to indicate success or fail.
+    //    bool sendSuccess = payable(msg.sender).send(address(this).balance);
+
+    //    require(sendSuccess, "Send failed"); //reverts when false is returned
+
+       //call
+        (bool callSuccess, ) = payable(msg.sender).call{value: address(this).balance}("");
+        
+        require(callSuccess, "Calll failed");
+
+    }
+
+
+    modifier onlyOwner() {
+        require(msg.sender == owner, "must be the owner");
+        _;  // having the underscore below means, the check above should be done first, before proceeding to code
     }
     
 }
